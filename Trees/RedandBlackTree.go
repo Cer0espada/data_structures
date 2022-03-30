@@ -1,11 +1,15 @@
 package Trees
 
+// - Self balancing binary search tree
+//
 // - The root is black. (Root Property)
 // - Every external node is black. (External Property)
 // - The children of a red node are black. (Red Property)
 // - All external nodes have the same black depth.(Depth Property)
 // - Every New node must inserted with Red color.
 // - Every leaf (i.e. NULL node) must colored Black.
+// - Nodes requireon storage bit to keep track of color
+// - The longest path(root farthest nil) is no more than twice the length of the shortest path(root nearest to nil)
 // - asymptotic performance
 // - Searching in O(log(n))
 // - Inserition in O(log(n))

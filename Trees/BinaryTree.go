@@ -222,6 +222,8 @@ func (BST *BinarySearchTree) Insert(value int){
 	BST.Size++
 }
 //returns the binarySearchNode at a particular index 
+//
+//Time complexity is in O(log(n)) time
 func (BST *BinarySearchTree) Find(value int)(int, *BinarySearchNode, error){
 	if BST.isEmpty(){
 		err:= fmt.Errorf("this Binary Search Tree is empty")
@@ -239,6 +241,7 @@ func (BST *BinarySearchTree) Find(value int)(int, *BinarySearchNode, error){
 	return index, &node, nil
 }
 //Performs InOrderTraversal of binary Tree
+//In which Items are returned in their least-to-greatest order
 func (BST *BinarySearchTree) InOrderTraversal(node BinarySearchNode)([]int, error){
 
 	if BST.isEmpty(){

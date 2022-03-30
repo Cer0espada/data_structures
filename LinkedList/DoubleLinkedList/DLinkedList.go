@@ -13,16 +13,10 @@ type DListNode[T comparable] struct {
 }
 
 //Double linked lists are an optimization over the traditional LinkedList Data type
-// There is a bidirectional track that we can traverse the list in; we start at the head node and move to a tail node
-// traverse from the root until the last node, which will end at an empty null value.
+//There is a bidirectional track that we can traverse the list in; we start at the head node and move to a tail node
+//traverse from the root until the last node, which will end at an empty null value.
 //Includes a Tail Optimization to ge the last element , converting an O(N) to a O(1) Lookup
 //Linked List tend to be more memory efficent and sacrifice the typical O(1) index look up that Arrays/ Lists /Slices have 
-//Insert at Front O(1)
-//Insert at N position O(N)
-//Insert at end O(1)
-//Remove at Front O(1)
-//Remove at N position O(N)
-//Remove at End O(1)
 type DLinkedList[T comparable] struct {
 	Head *DListNode[T]
 	Tail *DListNode[T]
@@ -56,7 +50,9 @@ func (DLL *DLinkedList[T]) AddFront(Value T) {
 	DLL.Head = &newNode
 	DLL.Size++
 }
-//Insert at N position O(N)
+//Insert at N position with value of T
+//
+//Time Complexity  O(N)
 func (DLL *DLinkedList[T]) AddAtPos(pos int, value T)(error){
 	if DLL.isEmpty(){
 		DLL.AddFront(value)
@@ -158,7 +154,9 @@ func (DLL *DLinkedList[T]) AddMiddle(Value T) {
 	curr.Next = &newNode
 	DLL.Size++ 
 }
-// retrieves the node count of listnodes in the linked list
+// retrieves the index or position of a specific node value in the LinkedList
+//
+//Time Complexity is O(N)
 func (DLL *DLinkedList[T]) IndexOf(Value T) (int, error) {
 	if DLL.isEmpty() {
 		err := fmt.Errorf("linkedlist is empty at this position")
@@ -199,7 +197,9 @@ func (DLL *DLinkedList[T]) IndexOf(Value T) (int, error) {
 
 	
 }
-
+//Retrieves the node given a certain index
+//
+//Time complexity O(N)
 func (DLL *DLinkedList[T]) GetIndex(index int) (*DListNode[T], error){
 	if DLL.isEmpty(){
 		err := fmt.Errorf("LinkedList is empty at this position")
@@ -236,7 +236,9 @@ func (DLL *DLinkedList[T]) PrintList() {
 	fmt.Println("thats the whole list")
 }
 
-//Remove at Front O(1)
+//Remove at Front, removes current head node
+//
+//Time Complexity is O(1)
 func (DLL *DLinkedList[T]) RemoveFront() (error){
 	if DLL.isEmpty() {
 		err := fmt.Errorf("Linked List is empty")
@@ -258,7 +260,9 @@ func (DLL *DLinkedList[T]) RemoveFront() (error){
 	DLL.Size--
 	return nil
 }
-//Remove at End O(1)
+//Remove at End 
+//
+//Time Complexity is O(1)
 func (DLL *DLinkedList[T]) RemoveEnd()(error) {
 	if DLL.isEmpty() {
 		err := fmt.Errorf("linkedList is empty")
@@ -312,7 +316,9 @@ func (DLL *DLinkedList[T]) RemoveMiddle()(error) {
 	DLL.Size--
 	return nil
 }
-//Removal of value at Position N O(N)
+//Removal of value at Position N 
+//
+//Time complexity O(N)
 func (DLL *DLinkedList[T]) RemoveAtPos(index int)(*DListNode[T], error){
 	if DLL.isEmpty(){
 		err:= fmt.Errorf("Linked List is empty")
@@ -457,6 +463,8 @@ func (DLL *DLinkedList[T]) DetectCycle() (bool, error) {
 	return false, nil
 }
 //returns bool value whether value is present in the LinkedList
+//
+//Time Complexity O(N)
 func (DLL *DLinkedList[T]) Contains(value T)(bool){
 
 	if DLL.isEmpty(){
@@ -495,11 +503,11 @@ func (DLL *DLinkedList[T]) ToSlice()([]T, error){
 	}
 
 	if DLL.hasOne(){
-		return []T{}, nil
+		return []T{DLL.Head.Value}, nil
 	}
 	curr := DLL.Head
 
-	DLLX := make([]T, 0, DLL.Size)
+	DLLX := make([]T,0,DLL.Size)
 
 	for{
 		if curr.Next == nil{
@@ -511,4 +519,3 @@ func (DLL *DLinkedList[T]) ToSlice()([]T, error){
 	return DLLX, nil
 }
 
-//generates one random cycle

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-//
+
 var testValues []int = []int{44, 22, 33, 11, 23, 14, 15, 24}
 var sortedValues []int = []int{11,14,15,22,23,24,33,44}
 func TestInsert(t *testing.T){
