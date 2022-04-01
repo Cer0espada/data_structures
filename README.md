@@ -2,13 +2,13 @@
 
 ![alt text](./misc/go_witchlearning.svg)
 
-The following is a repository create by myself to help master the GO programming language by implementing classic Data Structures and Algorithms in golang. 
+The following is a repository created by myself in order to master the GO programming language by implementing classic Data Structures and Algorithms. 
 Any comments or tips would be appreciated!
 
 
 ## LinkedList
-- Singly Linked List with bare size optimization 
-- Doubly Linked list with Tail and Prev Node optimization 
+- Singly Linked List with Size optimization 
+- Doubly Linked list with Tail Pointer, Size field, and Prev Node optimization 
 
 ## Queues
 - Basic Queue extending the doubly linked list implementation
@@ -25,7 +25,7 @@ Any comments or tips would be appreciated!
 - Basic Hash Symbol table implementation using seperate chaining method 
 
 ## Graphs
-- Unidirectional Graph implementing Breath First Search and Depth First Search Algorithms
+- Bidirectional Graph implementing Breath First Search and Depth First Search Algorithms
 
 ## Sorts 
 - Merge Sort Algorithm on a standard array (Go Slice)

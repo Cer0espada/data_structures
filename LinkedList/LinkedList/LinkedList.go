@@ -5,9 +5,9 @@ import (
 	"fmt"
 )
 
-type ListNode struct{
-	Next *ListNode
-	Value int
+type ListNode[T comparable] struct{
+	Next *ListNode[T]
+	Value T
 }
 
 //Singly linked lists are the simplest type of linked list
@@ -19,52 +19,52 @@ type ListNode struct{
 //Remove at Front O(1)
 //Remove at N position O(N)
 //Remove at End O(N)
-type LinkedList struct{
-	Head *ListNode
+type LinkedList[T comparable] struct{
+	Head *ListNode[T]
 	Size int
 }
 
-func (LL *LinkedList) isEmpty()(bool){
+func (LL *LinkedList[T]) isEmpty()(bool){
 	if LL.Head == nil && LL.Size ==0{
 		return true
 	}
 	return false
 }
 
-func (LL *LinkedList) hasOne()(bool){
+func (LL *LinkedList[T]) hasOne()(bool){
 	if LL.Head != nil && LL.Size ==1{
 		return true
 	}
 	return false
 }
 //Insert at Front O(1)
-func (LL *LinkedList) AddFront(value int) (error){
+func (LL *LinkedList[T]) AddFront(value T) (error){
 	
 	if LL.isEmpty() {
 		
-		LL.Head = &ListNode{Value: value}
+		LL.Head = &ListNode[T]{Value: value}
 		LL.Size++
 		return nil
 	}
 
-	curr := ListNode{LL.Head, value}
+	curr := ListNode[T]{LL.Head, value}
 	curr.Next = LL.Head
 	LL.Head = &curr
 	LL.Size++
 	return nil
 }
 //Adding at middle is O(N) time and is unstable
-func(LL *LinkedList) AddMiddle(value int)(error){
+func(LL *LinkedList[T]) AddMiddle(value T)(error){
 
 	if LL.isEmpty(){
-		newNode := ListNode{Value: value}
+		newNode := ListNode[T]{Value: value}
 		LL.Head = &newNode
 		LL.Size++
 		return nil
 	}
 
 	if LL.hasOne(){
-		newNode := ListNode{Next: LL.Head, Value: value}
+		newNode := ListNode[T]{Next: LL.Head, Value: value}
 		LL.Head.Next = &newNode
 		LL.Size++
 		return nil
@@ -76,7 +76,7 @@ func(LL *LinkedList) AddMiddle(value int)(error){
 
 	for i :=0; i <= mid ;i++{
 		if curr.Next == nil{
-			err := errors.New("LinkedList pointer error")
+			err := errors.New("LinkedList[T] pointer error")
 			return err
 		}
 
@@ -85,18 +85,18 @@ func(LL *LinkedList) AddMiddle(value int)(error){
 	
 	nextNode := curr.Next
 
-	curr.Next = &ListNode{nextNode, value}
+	curr.Next = &ListNode[T]{nextNode, value}
 
 	LL.Size++
 	return nil
 
 }
 
-// Adding to the end of the linkedlist is O(N) time without tail optimization
-func (LL *LinkedList) AddEnd(value int){
+// Adding to the end of the linkedlist[T] is O(N) time without tail optimization
+func (LL *LinkedList[T]) AddEnd(value T){
 	
 	if LL.isEmpty(){
-		LL.Head = &ListNode{Value: value}
+		LL.Head = &ListNode[T]{Value: value}
 		LL.Size++
 		return 
 	}
@@ -106,11 +106,11 @@ func (LL *LinkedList) AddEnd(value int){
 		curr = curr.Next
 	}
 
-	curr.Next = &ListNode{Value:value}
+	curr.Next = &ListNode[T]{Value:value}
 	LL.Size++
 }
 //Removing from the beginning of the lsit is O(1) time 
-func (LL *LinkedList) RemoveFront()(error) {
+func (LL *LinkedList[T]) RemoveFront()(error) {
 
 	if LL.isEmpty(){
 		err := errors.New("Linked List is already empty")
@@ -128,7 +128,7 @@ func (LL *LinkedList) RemoveFront()(error) {
 	return nil
 }
 //Unstable rmeoval of middle element completed in O(N) time
-func (LL *LinkedList) RemoveMiddle() (error) {
+func (LL *LinkedList[T]) RemoveMiddle() (error) {
 	if LL.isEmpty(){
 		err := errors.New("Linked List is already empty")
 		return err
@@ -144,7 +144,7 @@ func (LL *LinkedList) RemoveMiddle() (error) {
 
 	curr := LL.Head
 
-	var prev ListNode
+	var prev ListNode[T]
 
 	for i :=0; i< mid;i++{
 		prev = *curr
@@ -158,7 +158,7 @@ func (LL *LinkedList) RemoveMiddle() (error) {
 
 }
 //Removal of end without tail optimization is completed in O(N) time
-func (LL *LinkedList) RemoveEnd()(error){
+func (LL *LinkedList[T]) RemoveEnd()(error){
 	if LL.isEmpty(){
 		err := errors.New("Linked List is already empty")
 		return err
@@ -185,7 +185,7 @@ func (LL *LinkedList) RemoveEnd()(error){
 }
 
 //returns the index of the element in the chain of a linked list O(N)
-func (LL *LinkedList) indexOf(value int) (int ,error){
+func (LL *LinkedList[T]) indexOf(value T) (int ,error){
 	if LL.isEmpty(){
 		err := errors.New("Linked List empty")
 		return -1, err
@@ -207,14 +207,14 @@ func (LL *LinkedList) indexOf(value int) (int ,error){
 	}
 
 	if curr.Value != value{
-		err := fmt.Errorf("value of %v does not exist in the LinkedList", value)
+		err := fmt.Errorf("value of %v does not exist in the LinkedList[T]", value)
 		return -1, err
 	}
 	
 	return count, nil
 }
 
-func (LL *LinkedList) DetectCycle()(bool, error){
+func (LL *LinkedList[T]) DetectCycle()(bool, error){
 	if LL.isEmpty() || LL.hasOne() || LL.Size < 2{
 		return false, nil
 	}
@@ -237,7 +237,7 @@ func (LL *LinkedList) DetectCycle()(bool, error){
 	
 }
 
-func (LL *LinkedList) ReorderList(step int)(error){
+func (LL *LinkedList[T]) ReorderList(step int)(error){
 
 	if LL.isEmpty() || LL.hasOne() || LL.Size < 2{
 		err := errors.New(fmt.Sprintf("step size of %v is too small to do any reordering", step))
@@ -246,12 +246,12 @@ func (LL *LinkedList) ReorderList(step int)(error){
 
 	capacity := LL.Size/step
 
-	nodeArray := make([]ListNode,capacity, capacity)
+	nodeArray := make([]ListNode[T],capacity, capacity)
 
 	curr := LL.Head
 
 	var count int
-	var prev ListNode
+	var prev ListNode[T]
 
 	for {
 		if curr.Next == nil{
@@ -298,7 +298,7 @@ func (LL *LinkedList) ReorderList(step int)(error){
 	return nil
 }
 
-func (LN *ListNode) reverse()(*ListNode){
+func (LN *ListNode[T]) reverse()(*ListNode[T]){
 	if LN.Next == nil || LN == nil{
 		return LN
 	}
@@ -311,6 +311,6 @@ func (LN *ListNode) reverse()(*ListNode){
 	return node
 }
 
-func (LL *LinkedList) Reverse(){
+func (LL *LinkedList[T]) Reverse(){
 	LL.Head.reverse()
 }

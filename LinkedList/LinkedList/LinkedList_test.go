@@ -8,7 +8,7 @@ import (
 var testValues []int = []int{11,32,4,5,6,7,8,1,-22,39,1000,52}
 
 func TestAddFront(t *testing.T){
-	var LL LinkedList
+	var LL LinkedList[int]
 
 	for index, test := range testValues{
 		LL.AddFront(test)
@@ -24,7 +24,7 @@ func TestAddFront(t *testing.T){
 }
 
 func TestAddMiddle(t *testing.T){
-	var LL LinkedList
+	var LL LinkedList[int]
 
 	for index, test := range testValues{
 		LL.AddMiddle(test)
@@ -45,7 +45,7 @@ func TestAddMiddle(t *testing.T){
 }
 
 func TestAddEnd(t *testing.T){
-	var LL LinkedList
+	var LL LinkedList[int]
 
 	for index,test := range testValues{
 		LL.AddEnd(test)
@@ -71,7 +71,7 @@ func TestAddEnd(t *testing.T){
 
 func TestRemoveFront(t *testing.T){
 	t.Run("testing nil case", func (T *testing.T){
-		var LL LinkedList
+		var LL LinkedList[int]
 
 		err := LL.RemoveFront()
 
@@ -80,7 +80,7 @@ func TestRemoveFront(t *testing.T){
 		}
 	})
 
-	var LL LinkedList
+	var LL LinkedList[int]
 
 	for _, test := range testValues{
 		LL.AddFront(test)
@@ -107,7 +107,7 @@ func TestRemoveFront(t *testing.T){
 
 func TestRemoveMiddle(t *testing.T){
 	t.Run("testing nilcase", func(T *testing.T){
-		var LL LinkedList
+		var LL LinkedList[int]
 
 		err:= LL.RemoveMiddle()
 
@@ -116,7 +116,7 @@ func TestRemoveMiddle(t *testing.T){
 		}
 	})
 
-	var LL LinkedList 
+	var LL LinkedList[int] 
 
 	for _,test := range testValues{
 		LL.AddEnd(test)
@@ -155,7 +155,7 @@ func TestRemoveMiddle(t *testing.T){
 
 func TestRemoveEnd(t *testing.T){
 	t.Run("testing nilcase", func(t *testing.T){
-				var LL LinkedList
+				var LL LinkedList[int]
 
 		err:= LL.RemoveEnd()
 
@@ -164,7 +164,7 @@ func TestRemoveEnd(t *testing.T){
 		}
 	})
 
-	var LL LinkedList
+	var LL LinkedList[int]
 
 	for _, test := range testValues{
 		LL.AddEnd(test)
@@ -205,7 +205,7 @@ func TestRemoveEnd(t *testing.T){
 func TestIndexOf(t *testing.T){
 
 	t.Run("testing nilcase", func(t *testing.T){
-		var LL LinkedList
+		var LL LinkedList[int]
 
 		_, err := LL.indexOf(22)
 
@@ -215,7 +215,7 @@ func TestIndexOf(t *testing.T){
 	})
 
 
-	var LL LinkedList
+	var LL LinkedList[int]
 
 	for _, test := range testValues{
 		LL.AddEnd(test)
