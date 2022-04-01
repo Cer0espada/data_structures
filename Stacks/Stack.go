@@ -61,6 +61,12 @@ func (SS *Stack[T]) Pop() (T,error){
 		err :=fmt.Errorf("Stack size is empty")
 		return *new(T), err
 	}
+
+	if SS.Store.Size ==1 {
+		top := SS.Store.Head.Value
+		SS.Store.RemoveFront()
+		return top, nil
+	}
 	top := SS.Store.Head.Value
 	SS.Store.RemoveFront()
 	SS.Top = SS.Store.Head.Value

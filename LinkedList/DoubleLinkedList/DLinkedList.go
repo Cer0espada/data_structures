@@ -55,11 +55,14 @@ func (DLL *DLinkedList[T]) AddFront(Value T) {
 //Time Complexity  O(N)
 func (DLL *DLinkedList[T]) AddAtPos(pos int, value T)(error){
 	if DLL.isEmpty(){
-		DLL.AddFront(value)
-		err := fmt.Errorf("warn: LinkedList is empty")
-		return err
+		DLL.AddEnd(value)
+		return nil
 	}
 
+	if pos == DLL.Size{
+		DLL.AddEnd(value)
+		return nil
+	}
 	if pos >= DLL.Size {
 		err:= fmt.Errorf("index position %v is greater than Linked List's current size: %v", pos, DLL.Size)
 		return err
@@ -70,15 +73,6 @@ func (DLL *DLinkedList[T]) AddAtPos(pos int, value T)(error){
 		return nil
 	}
 
-	if pos == DLL.Size - 1{
-		DLL.AddEnd(value)
-		return nil
-	}
-
-	if pos == DLL.Size / 2 {
-		DLL.AddMiddle(value)
-		return nil
-	}
 	curr := DLL.Head
 
 	for i :=0; i<pos-1; i++ {
@@ -276,10 +270,8 @@ func (DLL *DLinkedList[T]) RemoveEnd()(error) {
 		return nil
 	}
 
-	lastNode := DLL.Tail.Prev
-	DLL.Tail.Prev = nil
-	lastNode.Next = nil 
-	DLL.Tail = lastNode
+	*DLL.Tail = *DLL.Tail.Prev
+	DLL.Tail.Next = nil
 	DLL.Size--
 	return nil
 }
@@ -326,12 +318,12 @@ func (DLL *DLinkedList[T]) RemoveAtPos(index int)(*DListNode[T], error){
 	}
 
 	if index < 0{
-		err := fmt.Errorf("Indicated string is not present in the index")
+		err := fmt.Errorf("Indicated index is not a valid number")
 		return nil, err
 	}
 
 	if index > DLL.Size -1{
-		err := fmt.Errorf("Indicated string exceeds expected index range")
+		err := fmt.Errorf("Indicated index  exceeds expected index range")
 		return nil, err
 	}
 

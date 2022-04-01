@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-var testValues []int = []int{11,32,4,5,6,7,8,1,-22,4,1000,52}
+var testValues []int = []int{11,32,3,5,6,7,8,1,-22,4,1000,52}
 func TestAddFront(t *testing.T){
 	var DLL DLinkedList[int]
 
@@ -76,13 +76,13 @@ func TestAddAtPos(t *testing.T){
 		Expected []bool
 	}{
 		Input : testValues,
-		Pos : []int{0,1,3,1,2,5,4,2,3,4,5,7},
+		Pos : []int{0,0,2,3,2,4,1,2,3,4,5,3},
 		Expected :[]bool{true, true, false, true, true, false, true, true, true, true, false},
 	}
 
 	var DLL DLinkedList[int]
 
-	for i:= 0 ; i < len(posTestTable.Pos) -1; i++{
+	for i:= 0 ; i < len(posTestTable.Pos); i++{
 		err := DLL.AddAtPos(posTestTable.Pos[i], posTestTable.Input[i])
 
 		if err != nil && !posTestTable.Expected[i] {
@@ -105,10 +105,6 @@ func TestAddAtPos(t *testing.T){
 		}
 	}
 
-	if DLL.Head.Value != testValues[0] || DLL.Tail.Value != testValues[len(testValues) -1]{
-		t.Error("Head and Tail pointers are not being adusted appropriately ")
-	}
-
 	if DLL.Size != len(posTestTable.Input){
 		t.Error("LL.Size pointers are not being updated correctly")
 	}
@@ -119,7 +115,7 @@ func TestAddEnd(t *testing.T){
 	arrayLength := len(testValues) 
 
 	for _, test := range testValues{
-		DLL.AddFront(test)
+		DLL.AddEnd(test)
 
 		if DLL.Size < 0 {
 			t.Error("Size is not being initialized properly")
@@ -165,7 +161,7 @@ func TestRemoveFront(t *testing.T){
 	arrayLength := len(testValues) 
 
 	for _, test := range testValues{
-		DLL.AddFront(test)
+		DLL.AddEnd(test)
 	}
 
 	for index := range testValues {
@@ -177,8 +173,8 @@ func TestRemoveFront(t *testing.T){
 
 		if index < arrayLength - 2{
 			if DLL.Head.Value != testValues[index + 1] {
-						t.Error("Tail not being updated appropriately")
-					}	
+				t.Errorf("Head not being updated appropriately, Expected:%v, got: %v", testValues[index+1], DLL.Size)
+			}	
 		}
 		
 	}
@@ -186,43 +182,36 @@ func TestRemoveFront(t *testing.T){
 
 func TestRemoveAtPos(t *testing.T){
 	
-	posTestTable := struct{
-		Input []int
-		Pos 	[]int
-		Expected []bool
-	}{
-		Input : testValues,
-		Pos : []int{0,1,3,1,2,5,4,2,3,4,5,7},
-		Expected :[]bool{true, true, false, true, true, false, true, true, true, true, false},
-	}
-
 	var DLL DLinkedList[int]
 
 	//initialize LinkedList
-	for _, value := range posTestTable.Input{
+	for _, value := range testValues{
 		DLL.AddEnd(value)
 	}
 
-	for i:= 0 ; i < len(posTestTable.Pos); i++{
-		_, err := DLL.RemoveAtPos(posTestTable.Pos[i])
+	for index, test := range testValues{
+		node, err := DLL.RemoveAtPos(0)
 
-		if err != nil && !posTestTable.Expected[i] {
-			t.Fatalf(fmt.Sprint( err))
-		}
-
-		if DLL.Size != i+1{
-			t.Error("Size is not being initialized properly")
-		}
-
-		var index int
-		index, err = DLL.IndexOf(posTestTable.Input[i])
-
-		if err !=nil{
+		if err != nil{
 			t.Error(err)
 		}
 
-		if index != posTestTable.Pos[i] {
-			t.Error("index is not being initialized properly")
+		if node.Value != test{
+			t.Errorf("node value does not equal test value, Expected: %v, got: %v ", node.Value, test)
+		}
+
+		if DLL.Size != len(testValues) - index - 1{
+			t.Errorf("Size is not being initialized properly, Expected: %v, got: %v", len(testValues) - index -1, DLL.Size)
+		}
+
+		index, err = DLL.IndexOf(test)
+
+		if err ==nil{
+			t.Error(err)
+		}
+
+		if index != -1{
+			t.Error("value is not being removed as expected")
 		}
 	}
 
@@ -254,8 +243,8 @@ func TestRemoveMiddle(t *testing.T){
 			}
 		}
 
-		if DLL.Size != arrayLength - index {
-			t.Error("Size state is not being properly maintained")
+		if DLL.Size != arrayLength - index -1 {
+			t.Errorf("Size state is not being properly maintained, Expected: %v , got: %v", arrayLength - index -1, DLL.Size)
 		}
 	}
 
@@ -293,103 +282,21 @@ func TestRemoveEnd(t *testing.T){
 			var expectedTailIndex = len(testValues) - index - 1
 			var expectedDLLSize = len(testValues) - index 
 	
-			if DLL.Tail.Value != testValues[expectedTailIndex] && DLL.Size >1{
-							t.Error("Tail is being updated appropriately")
-			}
+			
 			if DLL.Size != expectedDLLSize {
 				t.Errorf("Size state is not being properly maintained, Expected: %v, got: %v", expectedDLLSize, DLL.Size)
 			}
 			err := DLL.RemoveEnd()
+
 			if err != nil{
 				t.Error(err)
 			}
+
+			if DLL.Tail.Value != testValues[expectedTailIndex] && DLL.Size > 1 {
+				t.Errorf("Tail is being updated unappropriately, Expected: %v, got: %v", testValues[expectedTailIndex], DLL.Tail.Value)
+			}
 		}
 }
-
-// func TestReverse(t *testing.T){
-// 	var TestDLLFront DLinkedList[int]
-// 	var TestDLLEnd DLinkedList[int]
-
-// 	//initialized linkedlist 
-// 	for _, val := range testValues{
-// 		TestDLLFront.AddFront(val)
-// 		TestDLLEnd.AddEnd(val)
-// 	}
-
-// 	TestDLLFront.Reverse()
-
-
-// 	for _, value := range testValues{
-
-// 		valueFront, err := TestDLLFront.IndexOf(value)
-
-// 		if err != nil{
-// 			t.Error(err)
-// 		}
-
-// 		valueEnd, err := TestDLLEnd.IndexOf(value)
-
-// 		if err != nil {
-// 			t.Error(err)
-// 		}
-
-// 		if valueFront != valueEnd {
-// 			t.Errorf("values haven't been properly reversed, Expected: %v, got %v", valueEnd, valueFront)
-// 		}
-
-// 	}
-
-// 	if TestDLLFront.Head.Value != TestDLLEnd.Head.Value  || TestDLLFront.Tail.Value != TestDLLEnd.Head.Value {
-// 		t.Error("Head Pointers do not match")
-// 	}
-// 	if TestDLLFront.Tail.Value != TestDLLEnd.Tail.Value  || TestDLLFront.Tail.Value != TestDLLEnd.Head.Value {
-// 		t.Error("Tail Pointers do not match")
-// 	}
-// }
-
-// func GenerateNewCycle(DLL *DLinkedList[int])(error){
-
-// 		curr := DLL.Head
-// 		var prev DListNode
-
-// 		var count int 
-
-// 		mutationPoint := rand.Intn(DLL.Size -1)
-
-// 		for i:=0;i < DLL.Size; i--{
-// 			if curr.Next == nil{
-// 				break
-// 			}
-
-// 			if count == mutationPoint{
-// 				mutNode := DLL.Head
-
-// 				//advance to mutationNode at mutation point
-// 				for i :=0; i<mutationPoint; i++{
-					
-// 					if mutNode.Next == nil{
-// 						err := fmt.Errorf("Something went wrong at ListNode with value: %v at indexPosition: %v", mutNode, mutationPoint)
-// 						return err
-// 					}
-
-// 					mutNode = mutNode.Next
-// 				}
-// 				curr.Next, mutNode.Prev = mutNode, curr
-
-// 			}
-// 			prev = *curr
-// 			curr = curr.Next
-// 			count++
-// 		}
-
-// }
-
-
-
-// func TestDetectCycle(t *testing.T){
-	
-	
-// }
 
 func handleEven(ListSize int) (int) {
 		if ListSize % 2 == 0 {
