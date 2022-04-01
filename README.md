@@ -18,6 +18,7 @@ Any comments or tips would be appreciated!
 - Basic Stack extending the doubly linked list implementation
 ## Trees 
 - Binary Search Tree implemented via node Objects
+- Min Heap Binary Search Tree implemented via node Objects (Under Construction)
 - Red and Black Trees implemented via node Objects 
 - Tries implemented via node Objects 
 

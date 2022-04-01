@@ -115,7 +115,7 @@ func TestPoll(t *testing.T){
 		}
 
 		if MHT.Size != len(sortedMHValues) - index -1 {
-			t.Errorf("Size is not being managed as expected, Expected: %v, got: %v", len(sortedValues)-index, MHT.Size)
+			t.Errorf("Size is not being managed as expected, Expected: %v, got: %v", len(sortedMHValues)-index, MHT.Size)
 		}
 
 	}
