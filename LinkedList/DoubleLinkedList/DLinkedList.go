@@ -113,7 +113,7 @@ func (DLL *DLinkedList[T]) AddEnd(Value T) {
 	node := &DListNode[T]{Value:Value}
 
 	DLL.Tail.Next = node
-	node.Prev = DLL.Tail.Next
+	node.Prev = DLL.Tail
 	DLL.Tail = node 
 	DLL.Size++
 }
@@ -211,8 +211,8 @@ func (DLL *DLinkedList[T]) GetIndex(index int) (*DListNode[T], error){
 	for count >0{
 		curr = curr.Next
 		count--
-	} 
-
+	}
+ 
 	return curr,nil
 }
 
@@ -270,7 +270,7 @@ func (DLL *DLinkedList[T]) RemoveEnd()(error) {
 		return nil
 	}
 
-	*DLL.Tail = *DLL.Tail.Prev
+	DLL.Tail = DLL.Tail.Prev
 	DLL.Tail.Next = nil
 	DLL.Size--
 	return nil

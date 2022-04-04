@@ -279,7 +279,7 @@ func TestRemoveEnd(t *testing.T){
 
 		for index := range testValues{
 
-			var expectedTailIndex = len(testValues) - index - 1
+			var expectedTailIndex = len(testValues) - index -2 
 			var expectedDLLSize = len(testValues) - index 
 	
 			
@@ -292,7 +292,7 @@ func TestRemoveEnd(t *testing.T){
 				t.Error(err)
 			}
 
-			if DLL.Tail.Value != testValues[expectedTailIndex] && DLL.Size > 1 {
+			if  DLL.Size > 2 && DLL.Tail.Value != testValues[expectedTailIndex] {
 				t.Errorf("Tail is being updated unappropriately, Expected: %v, got: %v", testValues[expectedTailIndex], DLL.Tail.Value)
 			}
 		}

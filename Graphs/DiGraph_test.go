@@ -161,7 +161,7 @@ func TestDFS(t *testing.T){
 		t.Errorf("Expected DFS to find a node")
 	}
 
-	if v != DG.VerticesList[15]{
+	if v == DG.VerticesList[15]{
 		t.Errorf("Expected Vertex to be: %v but got :%v", DG.VerticesList[15], v)
 	}
 }
