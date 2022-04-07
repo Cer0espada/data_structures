@@ -14,8 +14,8 @@ Any comments or tips would be appreciated!
 - Basic Queue extending the doubly linked list implementation
 
 ## Stacks 
-
 - Basic Stack extending the doubly linked list implementation
+
 ## Trees 
 - Binary Search Tree implemented via node Objects
 - Min Heap Binary Search Tree implemented via node Objects (Under Construction)
@@ -30,5 +30,5 @@ Any comments or tips would be appreciated!
 
 ## Sorts 
 - Merge Sort Algorithm on a standard array (Go Slice)
-- Quick Sort Algorithm on s standard array (Go Slice)
+- Quick Sort Algorithm on a standard array (Go Slice)
 
