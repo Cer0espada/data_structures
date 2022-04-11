@@ -344,11 +344,20 @@ func (DLL *DLinkedList[T]) RemoveAtPos(index int)(*DListNode[T], error){
 		curr = curr.Next
 	}
 
+	if curr.Value == DLL.Tail.Value{
+		val := DLL.Tail
+		DLL.RemoveEnd()
+		return val, nil
+	}
+
 	prev := curr.Prev
 	nextNode := curr.Next
 
 	prev.Next = nextNode
-	nextNode.Prev = prev
+
+	if (prev != nil) && (nextNode != nil){
+		nextNode.Prev = prev
+	}
 
 	DLL.Size--
 	return curr, nil
